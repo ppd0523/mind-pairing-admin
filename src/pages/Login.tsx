@@ -6,6 +6,7 @@ import {
   useServer,
 } from "../components/DataProvider";
 import {useNavigate} from "react-router-dom";
+import crypto from 'crypto';
 
 
 function Login() {
@@ -38,6 +39,11 @@ function Login() {
     event.preventDefault();
     console.log("Submit and go home");
     const isLogin = await server.login(userId, userPw);
+    const hashed_pw = crypto.createHash('sha256')
+      .update(userPw)
+      .digest('hex');
+
+    console.log(hashed_pw);
 
     if(isLogin) navigator('/');
   }
